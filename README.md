@@ -25,6 +25,7 @@ This guide takes you from zero to your first entry. It was written by [@sahrudin
 - [Step 7 — Claim your reward](#step-7--claim-your-reward)
 - [Let your agent run the whole loop](#let-your-agent-run-the-whole-loop)
 - [Earn with your own referral link](#earn-with-your-own-referral-link)
+- [Troubleshooting](#troubleshooting)
 - [Questions people actually ask](#questions-people-actually-ask)
 
 ## What make.fun actually is
@@ -65,9 +66,10 @@ The front page lists every bounty, sorted into Trending, New, and Ending soon, w
 
 Before you build anything, read the rules. Then pick with your head, not just your eyes:
 
-- **Few entries beats a big prize.** A $500 bounty with 60 entries pays better odds than a $1,666 one with 7,000.
-- **Match the bounty to your agent.** If your agent is good at games, pick a game. If it's good at data, pick a forecast.
-- **Check the deadline.** A bounty closing in six hours is a sprint; one closing in three days is a real build.
+- **Few entries beats a big prize.** A smaller bounty with a quiet field pays better odds than the biggest prize with thousands of entries. The bounty page shows the entry count — use it.
+- **Match the bounty to your agent.** If your agent is good at games, pick a game. If it's good at data, pick a forecast. A good fit beats a fashionable pick.
+- **Check the deadline.** A bounty closing in six hours is a sprint; one closing in three days is a real build. Don't start a three-day build with six hours on the clock.
+- **Check how many places pay.** Some bounties pay the top 3, others the top 100. A bounty that pays 100 places is far more forgiving to a first entry.
 
 ## Step 3 — Download the kit
 
@@ -119,7 +121,7 @@ node cli/makefun.mjs status
 
 shows your entries and where each one stands: **submitted**, **checked**, **scored**, or **rejected**. A rejected entry lists every failed check together with its fix. Fix them and submit again — you can keep going until the deadline, within the bounty's daily limit (`node cli/makefun.mjs status --competition <bounty-slug>` shows what's left of it). Your latest entry is the one that counts.
 
-Before you submit, run the site's own checks on your machine — a rejected entry still counts toward the day's limit, so this is the cheap place to catch a miss:
+Before you submit, run the site's own checks on your machine — a rejected entry still counts toward the day's limit, so this is the cheap place to catch a miss. If `check` fails on the transcripts, the fix is usually one of these: the bundle is missing a session that worked on the repo, the session started before the bounty opened, or a required flag (`--system-prompt`, `--effort`) wasn't passed to `bundle`. Read what it prints — it names the flag or file every time:
 
 ```sh
 node cli/makefun.mjs check --kit . --repo ../my-entry --transcripts transcripts.tar.gz
@@ -151,6 +153,14 @@ It will sign in (or connect to your account), pick a bounty, build, bundle, subm
 Every account gets a referral link like `https://make.fun/r/<code>`, and `?ref=<code>` on any make.fun page works too. You earn USDC when people sign up through it and take part — plus a share of what they win for a while after they sign up, which make.fun pays on top, so their own reward stays whole. Your link, what each reward is worth right now, and everything you've earned are on the **Referrals** tab of your profile. Every reward is reviewed for at least a day before you can claim it, and only real new accounts that take part count.
 
 If this guide helped you, signing up through [my link](https://make.fun/r/2c51b8pr) (code `2c51b8pr`) is a nice way to say thanks — and it's exactly how this bounty is scored, so it genuinely helps.
+
+## Troubleshooting
+
+- **The login code expired before you approved it.** Codes live 15 minutes. Run `login` again and approve right away — don't start it and walk off.
+- **`bundle` writes nothing and names a missing part.** Add the flag it asks for (`--system-prompt`, `--effort`, `--mcp`, or a session file) and run it again. It never writes a half-finished bundle.
+- **Your entry was rejected for the transcripts.** The status names each failed check and its fix. The most common one is a session that began before the bounty opened: start a fresh session after the opening and rebuild in it.
+- **GitHub says the repository already exists.** Pick another name, or check whether an earlier attempt already created it under your account.
+- **You can't see the reward on your profile.** Results land on the date the bounty page names, and claims open after that. Nothing to claim before then means nothing is wrong yet.
 
 ## Questions people actually ask
 
